@@ -68,7 +68,7 @@ class Home_Page extends StatelessWidget {
                       'News',
                       CupertinoIcons.news,
                       Colors.green,
-                          () => Get.to( NewsSearchPage())),
+                          () => Get.to( NewsScreen())),
                   itemDashboard(
                       'Movie',
                       CupertinoIcons.play_rectangle,
@@ -78,7 +78,7 @@ class Home_Page extends StatelessWidget {
                       'Timezone',
                       CupertinoIcons.time_solid,
                       Colors.purple,
-                          () => Get.to( Timezone_Page())),
+                          () => Get.to( TimeZoneSearch())),
 
                   itemDashboard(
                       'Login',

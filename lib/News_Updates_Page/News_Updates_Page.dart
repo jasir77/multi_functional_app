@@ -1,71 +1,54 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
+import 'Controller/News_Updates_Controller.dart';
 
-
-class NewsSearchPage extends StatefulWidget {
-  @override
-  _NewsSearchPageState createState() => _NewsSearchPageState();
-}
-
-class _NewsSearchPageState extends State<NewsSearchPage> {
-  TextEditingController _searchController = TextEditingController();
-  List<dynamic> _newsArticles = [];
-
-  Future<void> _searchNews(String searchTerm) async {
-    final Uri uri = Uri.parse('https://newsapi.org/v2/everything?q=$searchTerm&apiKey=58b3ac798dee43cicada656bae0f60b');
-    final response = await http.get(uri);
-
-    if (response.statusCode == 200) {
-      setState(() {
-        _newsArticles = json.decode(response.body)['articles'];
-      });
-    } else {
-      throw Exception('Failed to load news articles');
-    }
-  }
+class NewsScreen extends StatelessWidget {
+  final NewsController newsController = Get.put(NewsController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('News Search'),
+        title: Text('News App'),
       ),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
-              controller: _searchController,
+              controller: newsController.textEditingController,
               decoration: InputDecoration(
-                labelText: 'Search News',
+                hintText: 'search news',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    _searchNews(_searchController.text);
+                    newsController.searchNews(newsController.textEditingController.text);
                   },
                 ),
               ),
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: _newsArticles.length,
+            child: Obx(() => ListView.builder(
+              itemCount: newsController.articles.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(_newsArticles[index]['title']),
-                  subtitle: Text(_newsArticles[index]['description'] ?? ''),
-                  leading: _newsArticles[index]['urlToImage'] != null
-                      ? Image.network(_newsArticles[index]['urlToImage'])
-                      : Container(), // Show a placeholder if no image available
-                  onTap: () {
-                    // Open full news article in a browser or in a WebView
-                    // Example: launchURL(_newsArticles[index]['url']);
-                  },
+                  title: Text(newsController.articles[index].title),
+                  subtitle: Text(newsController.articles[index].description ?? ''),
+                  leading: newsController.articles[index].imageUrl != null
+                      ? Image.network(
+                    newsController.articles[index].imageUrl!,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  )
+                      : SizedBox.shrink(),
                 );
               },
-            ),
+            )),
           ),
         ],
       ),

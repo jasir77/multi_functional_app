@@ -3,10 +3,7 @@ import 'package:get/get.dart';
 import 'package:multi_functional_app/Movie_Information_Page/Controller/Movie_Information_Controller.dart';
 
 class MoviePage extends StatelessWidget {
-  @override
   final MovieController movieController = Get.put(MovieController());
-
-  MoviePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,10 @@ class MoviePage extends StatelessWidget {
             child: TextField(
               controller: movieController.searchController,
               decoration: InputDecoration(
-                labelText: 'Search Batman',
+                labelText: 'Search Movies',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
@@ -32,15 +32,17 @@ class MoviePage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: movieController.searchResults.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Image.network(movieController.searchResults[index]['Poster']),
-                  title: Text(movieController.searchResults[index]['Title']),
-                  subtitle: Text(movieController.searchResults[index]['Year']),
-                );
-              },
+            child: Obx(
+                  () => ListView.builder(
+                itemCount: movieController.searchResults.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Image.network(movieController.searchResults[index]['Poster']),
+                    title: Text(movieController.searchResults[index]['Title']),
+                    subtitle: Text(movieController.searchResults[index]['Year']),
+                  );
+                },
+              ),
             ),
           ),
         ],

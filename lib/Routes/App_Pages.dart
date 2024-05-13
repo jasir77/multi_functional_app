@@ -35,7 +35,7 @@ class AppPages {
     ),
     GetPage(
     name: AppRoutes. timezone,
-  page: () => Timezone_Page(),
+  page: () => TimeZoneSearch(),
   binding: TimezoneBinding (),
     ),
     GetPage(
@@ -45,7 +45,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes. news,
-      page: () =>  NewsSearchPage(),
+      page: () =>  NewsScreen(),
       binding:  NewsBinding (),
     ),
     GetPage(

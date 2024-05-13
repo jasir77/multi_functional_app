@@ -7,7 +7,11 @@ import 'dart:convert';
 class MovieController extends GetxController {
   TextEditingController searchController = TextEditingController();
   RxList<dynamic> searchResults = <dynamic>[].obs; // Use RxList for reactivity
-
+  void onInit() {
+    super.onInit();
+    // Load latest movies when the controller is initialized
+    searchBatman("latest"); // Pass an empty string to load the latest movies
+  }
   Future<void> searchBatman(String searchTerm) async {
     final Uri uri = Uri.parse('https://www.omdbapi.com/?s=$searchTerm&apikey=4ed24780');
     final response = await http.get(uri);
