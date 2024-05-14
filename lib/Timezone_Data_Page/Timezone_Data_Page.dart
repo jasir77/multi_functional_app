@@ -75,4 +75,3 @@ class _TimeZoneSearchState extends State<TimeZoneSearch> {
     );
   }
 }
-

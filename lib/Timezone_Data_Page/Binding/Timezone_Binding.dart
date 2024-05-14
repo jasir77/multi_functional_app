@@ -4,6 +4,6 @@ import '../Controller/Timezone_Controller.dart';
 class TimezoneBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<TimezoneController>(() => TimezoneController());
+    Get.lazyPut<TimeZoneController>(() => TimeZoneController());
   }
 }

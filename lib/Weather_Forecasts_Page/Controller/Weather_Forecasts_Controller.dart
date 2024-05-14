@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../Models/Model.dart';
 import '../Network.dart';
 
